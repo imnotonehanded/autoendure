@@ -1,4 +1,3 @@
-
 import time
 import os
 import json
@@ -7,7 +6,12 @@ import pyautogui
 import keyboard
 import random
 import win32api, win32con
+from pynput.keyboard import Key, Controller
+import requests
 
+wasd = ["w", "a", "s", "d"]
+macroFile = open('log.txt', 'r')
+keyboard = Controller()
 configFile = open("config.json")
 config = json.load(configFile)
 authKey = "ssd"
@@ -23,7 +27,9 @@ if zones[zone]:
 else:
   print("Error: Invalid zone name check #faq for more info")
 
-#W.I.P. will check through a database to make sure the key is correct
+def press(k):
+  keyboard.press(k)
+  keyboard.release(k)
 def checkKey(key):
   if key == authKey:
     return True
@@ -38,13 +44,12 @@ def start():
   ssd+=1
   print('\033[2;32mStarted endurance '+str(ssd))
 
-
+  #Clicks map
   loc0 = pyautogui.locateOnScreen('D:/autoendure-1/images/map.png', confidence = 0.8)
-  if loc0 !=None:
-    pyautogui.click(loc0)
+  pyautogui.click(loc0)
   time.sleep(1)
 
-
+  #Clicks zone icon or large zone icon
   loc1 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng + ".png", confidence = 0.8)
   locv1 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng + "l" + ".png", confidence = 0.8)
   if loc1 !=None:
@@ -57,54 +62,81 @@ def start():
     pyautogui.click(locv1)
   time.sleep(1)
 
-  loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/ssd.png', confidence = 0.8)
-  if loc2 !=None:
-    pyautogui.click(loc2)
-    pyautogui.click(loc2)
-    pyautogui.click(loc2)
+  #Triple clicks the SSD Zone for next step
+  loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+  pyautogui.click(loc2)
+  pyautogui.click(loc2)
+  pyautogui.click(loc2)
   time.sleep(0.5)
   
-
+  #Moves mouse because of bug, luanches into main screen
   loc3 = pyautogui.locateOnScreen('D:/autoendure-1/images/luanch.png', confidence = 0.8)
-  if loc3 !=None:
-    time.sleep(0.5)
-    pyautogui.moveTo(loc3, duration=0.5, tween=pyautogui.easeInOutQuad)
-    pyautogui.click(loc3)
-
-    
+  time.sleep(0.5)
+  pyautogui.moveTo(loc3, duration=0.5, tween=pyautogui.easeInOutQuad)
+  pyautogui.click(loc3)
   time.sleep(15)
+  
+  #Waits 15 seconds then luanches into the actual game
   loc4 = pyautogui.locateOnScreen('D:/autoendure-1/images/luanch2.png', confidence = 0.8)
-  if loc4 !=None:
-    pyautogui.click(loc4)
+  pyautogui.click(loc4)
+  time.sleep(4)
+
+  #Waits until it cant see the white dot, signifing that we're loaded in
+  while True:
+    time.sleep(1)
+    if pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+      continue
+    else:
+      break
   time.sleep(0.5)
-
-
-  if prints: print("Luanched")
+  
+  #Iterates through the file with all the keystrokes and clicks each one
+  for i in macroFile:
+    s = i.strip("'")
+    if wasd[s.lower()]:
+      press(s.lower())
   time.sleep(0.5)
-
-
-  if prints: print("Waiting for ssd to load in")
+  press("e")
+  time.sleep(2)
+  
+  #Finds Start SSD button and clicks it
+  loc5 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+  pyautogui.click(loc5)
   time.sleep(0.5)
-
-
-  #waits until ssdtext.png is not visible
-  if prints: print("Walking to storm computer")
-  #uses keystrokes to simulate keypresses, once ended press e, then after 1 second finds storm shield buttons and presses it then finds start and starts 
-
-
-  if prints: print("Started, waiting for endurance to end")
-  #every 10 seconds it waits to find the open buttons, presses it then presses collect all
-
-
-  if prints: print("Collected Chest")
-  #checks again if it can see open, if it does it opens then collect all, if it doesnt then it starts again
-
-
+  
+  #Clicks Start Endurance
+  loc6 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+  pyautogui.click(loc6)
+  time.sleep(0.5)
+  press("esc")
+  time.sleep(0.5)
+  
+  #Waits until it sees the Open button then breaks the while loop
+  while True:
+    time.sleep(10)
+    if pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8) != None:
+      break
+    else:
+      continue
+  
+  #Finds open button clicks on it, then presses open all, then re loops until all things are opened
+  while True:
+    loc7 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+    if loc7 != None:
+      pyautogui.click(loc7)
+      pyautogui.click(pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8))
+      continue
+    else:
+      break
+    
+  #Sends to discord web hook
+  data = {"content": 'Just finished endurance #'+str(ssd)}
+  response = requests.post(config["webhook"], json=data)
   start()
   
 
 print("Welcome to AutoEndure by airttq")
-time.sleep(.1)
+time.sleep(1)
 cls()
 
 print("Enter key:")
