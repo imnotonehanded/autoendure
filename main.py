@@ -16,7 +16,7 @@ prints= True
 if config["print"] == "false": prints = False 
 autoKey = config["autokey"]
 zone = config["zone"]
-zones = {"stonewood": "stone.png", "plankerton": "plank.png", "cannyvalley": "canny.png", "twinepeaks": "twine.png"}
+zones = {"stonewood": "stone", "plankerton": "plank", "cannyvalley": "canny", "twinepeaks": "twine"}
 zonepng= ""
 if zones[zone]:
   zonepng = zones[zone]
@@ -45,11 +45,16 @@ def start():
   time.sleep(1)
 
 
-  loc1 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng, confidence = 0.8)
+  loc1 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng + ".png", confidence = 0.8)
+  locv1 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng + "l" + ".png", confidence = 0.8)
   if loc1 !=None:
     pyautogui.click(loc1)
     pyautogui.click(loc1)
     pyautogui.click(loc1)
+  elif locv1 != None:
+    pyautogui.click(locv1)
+    pyautogui.click(locv1)
+    pyautogui.click(locv1)
   time.sleep(1)
 
   loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/ssd.png', confidence = 0.8)
@@ -63,9 +68,9 @@ def start():
   loc3 = pyautogui.locateOnScreen('D:/autoendure-1/images/luanch.png', confidence = 0.8)
   if loc3 !=None:
     time.sleep(0.5)
+    pyautogui.moveTo(loc3, duration=0.5, tween=pyautogui.easeInOutQuad)
     pyautogui.click(loc3)
-    pyautogui.click(pyautogui.locateOnScreen('D:/autoendure-1/images/distract.png', confidence = 0.8))
-    pyautogui.click(loc3)
+
     
   time.sleep(15)
   loc4 = pyautogui.locateOnScreen('D:/autoendure-1/images/luanch2.png', confidence = 0.8)
