@@ -47,6 +47,7 @@ def start():
   #Clicks map
   loc0 = pyautogui.locateOnScreen('D:/autoendure-1/images/map.png', confidence = 0.8)
   pyautogui.click(loc0)
+  print("hello?")
   time.sleep(1)
 
   #Clicks zone icon or large zone icon
@@ -126,10 +127,9 @@ def start():
     if loc7 != None:
       pyautogui.moveTo(loc7, duration=0.5, tween=pyautogui.easeInOutQuad)
       pyautogui.click(loc7)
-      loc8 = pyautogui.locateOnScreen('D:/autoendure-1/images/collectall.png', confidence = 0.8)
-      pyautogui.moveTo(loc8, duration=0.5, tween=pyautogui.easeInOutQuad)
-      pyautogui.click(loc8)
-      continue
+      #loc8 = pyautogui.locateOnScreen('D:/autoendure-1/images/collectall.png', confidence = 0.8)
+      #pyautogui.moveTo(loc8, duration=0.5, tween=pyautogui.easeInOutQuad)
+      #pyautogui.click(loc8)
     else:
       break
     
@@ -137,7 +137,6 @@ def start():
   data = {"content": 'Just finished endurance #'+str(ssd)}
   response = requests.post(config["webhook"], json=data)
   time.sleep(4)
-  start()
   
 
 print("Welcome to AutoEndure by airttq")
@@ -167,7 +166,8 @@ if checkKey(enteredKey):
       time.sleep(1)
       cls()
     print("\033[2;31mPress Ctrl+C to stop")
-    start()
+    while True:
+      start()
   else:
     os.system("exit()")
 else:
