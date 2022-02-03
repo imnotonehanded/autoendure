@@ -8,7 +8,6 @@ import random
 from pynput.keyboard import Key, Controller
 import requests
 
-wasd = ["w", "a", "s", "d"]
 macroFile = open('log.txt', 'r')
 keyboard = Controller()
 configFile = open("D:/autoendure-1/config.json")
@@ -47,7 +46,6 @@ def start():
   #Clicks map
   loc0 = pyautogui.locateOnScreen('D:/autoendure-1/images/map.png', confidence = 0.8)
   pyautogui.click(loc0)
-  print("hello?")
   time.sleep(1)
 
   #Clicks zone icon or large zone icon
@@ -142,34 +140,6 @@ def start():
 print("Welcome to AutoEndure by airttq")
 time.sleep(1)
 cls()
-
-print("Enter key:")
-enteredKey = ""
-if autoKey != "no":
-    #print(autoKey)
-    enteredKey = autoKey
-else:
-    enteredKey = input()
-if checkKey(enteredKey):
-  print("""
-  Remember:
-  1. Make sure party is set to private, if not the endurance will be set up with wait for assistance
-  2. Make sure that the config file is filled out with the zone, it will not work if it doesn't know what zone to load into
-  3. Also make sure to have the macro file that has the keystrokes to walk to the storm sheild computer, if it doesnt go to the computer it can't start
-  """)
-  choice = input("Start? y/n: ")
-  if str(choice) == "y":
-    print(choice)
-    cls()
-    for i in reversed(range(2)):
-      print("Starting in " + str(i+1))
-      time.sleep(1)
-      cls()
-    print("\033[2;31mPress Ctrl+C to stop")
-    while True:
-      start()
-  else:
-    os.system("exit()")
-else:
-  print("Wrong Key!")
-  os.system("exit()")
+print("\033[2;31mPress Ctrl+C to stop")
+while True:
+    start()
