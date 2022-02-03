@@ -134,7 +134,6 @@ def start():
   #Sends to discord web hook
   data = {"content": 'Just finished endurance #'+str(ssd)}
   response = requests.post(config["webhook"], json=data)
-  time.sleep(4)
   
 
 print("Welcome to AutoEndure by airttq")
@@ -143,3 +142,4 @@ cls()
 print("\033[2;31mPress Ctrl+C to stop")
 while True:
     start()
+    time.sleep(3)
