@@ -1,5 +1,6 @@
 {
     "zone": "cannyvalley",
     "print": "false",
-    "autokey": "ssd"
+    "autokey": "ssd",
+    "webhook": "https://discord.com/api/webhooks/938545978020085791/SAisCRfTA_LWyewquiLxYEHFI61XYAyJ3ys8GMxbVf4tp3eHFU5rDoz_zvdu9Y9Myzu6"
 }

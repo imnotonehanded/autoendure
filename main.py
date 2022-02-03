@@ -5,14 +5,13 @@ from pyautogui import *
 import pyautogui
 import keyboard
 import random
-import win32api, win32con
 from pynput.keyboard import Key, Controller
 import requests
 
 wasd = ["w", "a", "s", "d"]
 macroFile = open('log.txt', 'r')
 keyboard = Controller()
-configFile = open("config.json")
+configFile = open("D:/autoendure/config.json")
 config = json.load(configFile)
 authKey = "ssd"
 ssd = 0
@@ -27,8 +26,9 @@ if zones[zone]:
 else:
   print("Error: Invalid zone name check #faq for more info")
 
-def press(k):
+def press(k,t):
   keyboard.press(k)
+  time.sleep(t)
   keyboard.release(k)
 def checkKey(key):
   if key == authKey:
@@ -84,7 +84,7 @@ def start():
   #Waits until it cant see the white dot, signifing that we're loaded in
   while True:
     time.sleep(1)
-    if pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+    if pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8):
       continue
     else:
       break
@@ -92,20 +92,21 @@ def start():
   
   #Iterates through the file with all the keystrokes and clicks each one
   for i in macroFile:
-    s = i.strip("'")
-    if wasd[s.lower()]:
-      press(s.lower())
+    i = i.split("|")
+    a = i[0]
+    b = i[1].replace("\n", "")
+    press(a,float(b))
   time.sleep(0.5)
-  press("e")
+  press("e", 0)
   time.sleep(2)
   
   #Finds Start SSD button and clicks it
-  loc5 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+  loc5 = pyautogui.locateOnScreen('D:/autoendure-1/images/ssde.png', confidence = 0.8)
   pyautogui.click(loc5)
   time.sleep(0.5)
   
   #Clicks Start Endurance
-  loc6 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+  loc6 = pyautogui.locateOnScreen('D:/autoendure-1/images/startssd.png', confidence = 0.8)
   pyautogui.click(loc6)
   time.sleep(0.5)
   press("esc")
