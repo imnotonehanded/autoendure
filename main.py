@@ -11,7 +11,7 @@ import requests
 wasd = ["w", "a", "s", "d"]
 macroFile = open('log.txt', 'r')
 keyboard = Controller()
-configFile = open("D:/autoendure/config.json")
+configFile = open("D:/autoendure-1/config.json")
 config = json.load(configFile)
 authKey = "ssd"
 ssd = 0
@@ -63,7 +63,7 @@ def start():
   time.sleep(1)
 
   #Triple clicks the SSD Zone for next step
-  loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+  loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng+'ssd.png', confidence = 0.8)
   pyautogui.click(loc2)
   pyautogui.click(loc2)
   pyautogui.click(loc2)
@@ -84,11 +84,11 @@ def start():
   #Waits until it cant see the white dot, signifing that we're loaded in
   while True:
     time.sleep(1)
-    if pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8):
+    if pyautogui.locateOnScreen('D:/autoendure-1/images/whitedot.png', confidence = 0.8):
       continue
     else:
       break
-  time.sleep(0.5)
+  time.sleep(2)
   
   #Iterates through the file with all the keystrokes and clicks each one
   for i in macroFile:
@@ -107,6 +107,7 @@ def start():
   
   #Clicks Start Endurance
   loc6 = pyautogui.locateOnScreen('D:/autoendure-1/images/startssd.png', confidence = 0.8)
+  pyautogui.moveTo(loc6, duration=0.5, tween=pyautogui.easeInOutQuad)
   pyautogui.click(loc6)
   time.sleep(0.5)
   press("esc")
@@ -115,17 +116,20 @@ def start():
   #Waits until it sees the Open button then breaks the while loop
   while True:
     time.sleep(10)
-    if pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8) != None:
+    if pyautogui.locateOnScreen('D:/autoendure-1/images/open.png', confidence = 0.8) != None:
       break
     else:
       continue
   
   #Finds open button clicks on it, then presses open all, then re loops until all things are opened
   while True:
-    loc7 = pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8)
+    loc7 = pyautogui.locateOnScreen('D:/autoendure-1/images/open.png', confidence = 0.8)
     if loc7 != None:
+      pyautogui.moveTo(loc7, duration=0.5, tween=pyautogui.easeInOutQuad)
       pyautogui.click(loc7)
-      pyautogui.click(pyautogui.locateOnScreen('D:/autoendure-1/images/CHANGE.png', confidence = 0.8))
+      loc8 = pyautogui.locateOnScreen('D:/autoendure-1/images/collectall.png', confidence = 0.8)
+      pyautogui.moveTo(loc8, duration=0.5, tween=pyautogui.easeInOutQuad)
+      pyautogui.click(loc8)
       continue
     else:
       break
