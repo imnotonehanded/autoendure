@@ -102,6 +102,7 @@ def start():
   
   #Finds Start SSD button and clicks it
   loc5 = pyautogui.locateOnScreen('D:/autoendure-1/images/ssde.png', confidence = 0.8)
+  pyautogui.moveTo(loc5, duration=0.5, tween=pyautogui.easeInOutQuad)
   pyautogui.click(loc5)
   time.sleep(0.5)
   
@@ -110,16 +111,14 @@ def start():
   pyautogui.moveTo(loc6, duration=0.5, tween=pyautogui.easeInOutQuad)
   pyautogui.click(loc6)
   time.sleep(0.5)
-  press("esc")
-  time.sleep(0.5)
   
   #Waits until it sees the Open button then breaks the while loop
   while True:
-    time.sleep(10)
     if pyautogui.locateOnScreen('D:/autoendure-1/images/open.png', confidence = 0.8) != None:
+      print("found")
       break
     else:
-      continue
+      time.sleep(5)
   
   #Finds open button clicks on it, then presses open all, then re loops until all things are opened
   while True:
@@ -137,6 +136,7 @@ def start():
   #Sends to discord web hook
   data = {"content": 'Just finished endurance #'+str(ssd)}
   response = requests.post(config["webhook"], json=data)
+  time.sleep(4)
   start()
   
 

@@ -1,11 +1,9 @@
-import time, keyboard
-macroFile = open('log.txt', 'r')
-def press(k,t):
-  keyboard.press(k)
-  time.sleep(t)
-  keyboard.release(k)
-for i in macroFile:
-    i = i.split("|")
-    a = i[0]
-    b = i[1].replace("\n", "")
-    press(a,float(b))
+import time
+import pyautogui
+import keyboard
+while True:
+    time.sleep(2)
+    if pyautogui.locateOnScreen('D:/autoendure-1/images/open.png', confidence = 0.8) != None:
+      print("seen")
+    else:
+      print("nope")
