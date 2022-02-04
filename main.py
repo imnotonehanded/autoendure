@@ -149,6 +149,7 @@ def start():
         if loc8 != None:
           pyautogui.moveTo(loc8, duration=0.5, tween=pyautogui.easeInOutQuad)
           pyautogui.click(loc8)
+          time.sleep(2)
           break
     else:
       break
