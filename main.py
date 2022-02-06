@@ -73,7 +73,7 @@ def start():
   time.sleep(1)
 
   #Triple clicks the SSD Zone for next step
-  loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng+'ssd.png', confidence = 0.8)
+  loc2 = pyautogui.locateOnScreen('D:/autoendure-1/images/'+zonepng+'ssd.png', confidence = 0.6)
   pyautogui.click(loc2)
   pyautogui.click(loc2)
   pyautogui.click(loc2)
